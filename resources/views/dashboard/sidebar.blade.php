@@ -5,7 +5,7 @@
             <img src="{{ asset('assets/img/user.jpg') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-            <a href="#" class="d-block">
+            <a href="{{ route('dashboard.index') }}" class="d-block">
                 @auth
                     {{ Auth::user()->name }}
                     @if (Auth::user()->role == 'admin')
@@ -41,12 +41,6 @@
                 @endif
 
                 @if (Auth::user()->role == 'admin')
-                    {{-- <li class="nav-item">
-                        <a href="" class="nav-link }">
-                            <i class="fas fa-chart-line nav-icon"></i>
-                            <p>Aktifitas Poli</p>
-                        </a>
-                    </li> --}}
                     <li class="nav-item {{ Request::is('*dashboard/admin/users*') ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-users"></i>
@@ -110,7 +104,7 @@
                         <a href="{{ route('dashboard.doctor.checkup.index') }}"
                             class="nav-link {{ Request::is('*dashboard/doctor/checkup*') ? 'active' : '' }}">
                             <i class="fas fa-stethoscope nav-icon"></i>
-                            <p>Memeriksa Pasien</p>
+                            <p>Pasien</p>
                         </a>
                     </li>
                     <li class="nav-item">

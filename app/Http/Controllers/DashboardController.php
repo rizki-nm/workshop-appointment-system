@@ -32,7 +32,10 @@ class DashboardController extends Controller
             $total_poli = Poli::all()->count();
             $total_obat = Drug::all()->count();
             return view('dashboard.index', compact('total_dokter', 'total_pasien', 'total_obat', 'total_poli'));
+        } else {
+            $total_antrian_waiting = RegistrationPoli::where('patient_id', auth()->user()->patient->id)->where('status', 'waiting')->count();
+            $total_antrian_done = RegistrationPoli::where('patient_id', auth()->user()->patient->id)->where('status', 'done')->count();
+            return view('dashboard.index', compact('total_antrian_waiting', 'total_antrian_done'));
         }
-
     }
 }

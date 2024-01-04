@@ -1,5 +1,5 @@
 @extends('dashboard/master')
-@section('title', 'Data Jadwal Praktek')
+@section('title', 'Dokter | Schedule')
 @section('content')
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -7,12 +7,10 @@
         <section class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1>Data Jadwal Praktek</h1>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item active">Jadwal Praktek</li>
+                    <div class="col">
+                        <ol class="breadcrumb float-sm-left">
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}">Home</a></li>
+                            <li class="breadcrumb-item active">Schedule</li>
                         </ol>
                     </div>
                 </div>
@@ -25,7 +23,23 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <!-- /.card-header -->
+                            @if ($errors->any())
+                                <div class="card-header">
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        <strong>Whoops!</strong> Terjadi kesalahan input data yang anda
+                                        masukan.<br><br>
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }} </li>
+                                            @endforeach
+                                        </ul>
+                                        <button type="button" class="close" data-dismiss="alert"
+                                                aria-label="close">
+                                            <span aria-hidden="true"> &times; </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            @endif
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-6">
@@ -33,8 +47,8 @@
                                             enctype="multipart/form-data">
                                             @csrf
                                             <div class="form-group">
-                                                <label for="nama">Hari</label>
-                                                <select name="hari" id="hari" class="form-control">
+                                                <label for="nama">Hari <span class="text-danger">*</span></label>
+                                                <select name="hari" id="hari" class="form-control @error('hari') is-invalid @enderror">
                                                     <option value="">-- Pilih Hari --</option>
                                                     <option value="1">Senin</option>
                                                     <option value="2">Selasa</option>
@@ -46,14 +60,14 @@
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <label for="nama">Jam Mulai</label>
+                                                <label for="nama">Jam Mulai <span class="text-danger">*</span></label>
                                                 <input type="time"
                                                     class="form-control rounded-0 @error('jam_mulai') is-invalid @enderror"
                                                     id="jam_mulai" name="jam_mulai" value=""
                                                     placeholder="Jam Mulai....">
                                             </div>
                                             <div class="form-group">
-                                                <label for="nama">Jam Selesai</label>
+                                                <label for="nama">Jam Selesai <span class="text-danger">*</span></label>
                                                 <input type="time"
                                                     class="form-control rounded-0 @error('jam_selesai') is-invalid @enderror"
                                                     id="jam_selesai" name="jam_selesai" value=""
@@ -67,7 +81,7 @@
                                     <div class="col-md-6">
                                         <div class="card mt-5">
                                             <div class="card-body">
-                                                <h5 class="text-center">Jadwal Praktik Sekarang</h5>
+                                                <h5 class="text-center">Jadwal Praktek Sekarang</h5>
                                                 @if ($schedule)
                                                     <table class="table table-bordered mt-4">
                                                         <thead>
@@ -96,8 +110,8 @@
                                                                         Minggu
                                                                     @endif
                                                                 </td>
-                                                                <td>{{ $schedule->start_time }}</td>
-                                                                <td>{{ $schedule->end_time}}</td>
+                                                                <td>{{ date('H:i', strtotime($schedule->start_time)) }}</td>
+                                                                <td>{{ date('H:i', strtotime($schedule->end_time)) }}</td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -123,10 +137,6 @@
     <!-- /.content-wrapper -->
 @endsection
 
-@section('css')
-    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
-@endsection
-
 @section('js')
     <!-- DataTables  & Plugins -->
     <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
@@ -147,17 +157,7 @@
                 "responsive": true,
                 "lengthChange": false,
                 "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-            $('#example2').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-            });
         });
     </script>
 @endsection
