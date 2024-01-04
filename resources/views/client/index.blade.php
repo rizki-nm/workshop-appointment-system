@@ -88,8 +88,8 @@
                     </div>
                 </form>
                 <p class="mb-2 mt-3 text-center">
-                    Belum punya no-rm?
-                    <a href="{{ route('register.patient.view') }}" class="text-center text-decoration-underline">
+                    Belum punya Nomor-RM?
+                    <a href="{{ route('register.patient.view') }}" class="text-center text-decoration-underline" style="text-decoration: underline;">
                         Daftar
                     </a>
                 </p>

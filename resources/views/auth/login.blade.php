@@ -61,9 +61,10 @@
                         </div>
                     </div>
                 </form>
-                <p class="mb-2 mt-3 text-center text-decoration-underline" style="text-decoration: underline; color: blue;">
-                    <a href="{{ route('register.patient.view') }}" class="text-center ">
-                        Daftar Sebagai Pasien
+                <p class="mb-2 mt-3 text-center">
+                    Belum punya akun?
+                    <a href="{{ route('register.patient.view') }}" class="text-center text-decoration-underline" style="text-decoration: underline;">
+                        Daftar
                     </a>
                 </p>
 
