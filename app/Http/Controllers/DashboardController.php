@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Doctor;
+use App\Models\Drug;
+use App\Models\Patient;
+use App\Models\Poli;
 use Illuminate\Http\Request;
 use App\Models\RegistrationPoli;
 use Illuminate\Support\Facades\Auth;
@@ -22,12 +26,13 @@ class DashboardController extends Controller
             $pasien_canceled = RegistrationPoli::whereDate('created_at', date('Y-m-d'))->where('status', 'canceled')->count();
             $pasien_done = RegistrationPoli::whereDate('created_at', date('Y-m-d'))->where('status', 'done')->count();
             return view('dashboard.index', compact('pasien_today', 'pasien_waiting', 'pasien_called', 'pasien_canceled', 'pasien_done'));
+        } elseif (Auth::user()->role == 'admin') {
+            $total_dokter = Doctor::all()->count();
+            $total_pasien = Patient::all()->count();
+            $total_poli = Poli::all()->count();
+            $total_obat = Drug::all()->count();
+            return view('dashboard.index', compact('total_dokter', 'total_pasien', 'total_obat', 'total_poli'));
         }
-        $pasien_today = 0;
-        $pasien_waiting = 0;
-        $pasien_called = 0;
-        $pasien_canceled = 0;
-        $pasien_done = 0;
-        return view('dashboard.index', compact('pasien_today', 'pasien_waiting', 'pasien_called', 'pasien_canceled', 'pasien_done'));
+
     }
 }
