@@ -8,31 +8,17 @@ use Illuminate\Http\Request;
 
 class PoliController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $polis = Poli::all();
         return view('dashboard.admin.poli.index', compact('polis'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $validation  = $request->validate([
             'name' => 'required',
             'description' => 'required'
-        ], [
-            'name.required' => 'Nama poli harus diisi',
-            'description.required' => 'Deskripsi poli harus diisi'
         ]);
 
         Poli::create($validation);
@@ -46,21 +32,11 @@ class PoliController extends Controller
         return back()->with($notification);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $validation  = $request->validate([
             'name' => 'required',
             'description' => 'required'
-        ], [
-            'name.required' => 'Nama poli harus diisi',
-            'description.required' => 'Deskripsi poli harus diisi'
         ]);
 
         $poli = Poli::find($id);
@@ -86,12 +62,6 @@ class PoliController extends Controller
         return back()->with($notification);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $poli = Poli::find($id);

@@ -38,7 +38,7 @@ Route::get('/login', [AuthController::class, 'index'])->name('login')->middlewar
 Route::post('/login', [AuthController::class, 'auth'])->name('auth')->middleware('guest');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
-Route::get('/patient/poli-register', function () {
+Route::get('/poli-register', function () {
     $polis = Poli::all();
     $schedules = ServiceSchedule::with('doctor')->get();
     return view('client.index', compact('polis', 'schedules'));

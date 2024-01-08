@@ -39,8 +39,18 @@ class DatabaseSeeder extends Seeder
 
         // dokter default
         User::create([
-            'name' => 'Dokter',
+            'name' => 'John',
             'email' => 'dokter@tes.com',
+            'email_verified_at' => now(),
+            'role' => 'doctor',
+            'is_active' => 1,
+            'password' => $password2,
+            'remember_token' => Str::random(10),
+        ]);
+
+        User::create([
+            'name' => 'Doe',
+            'email' => 'dokter2@tes.com',
             'email_verified_at' => now(),
             'role' => 'doctor',
             'is_active' => 1,
@@ -82,13 +92,21 @@ class DatabaseSeeder extends Seeder
         Doctor::create([
             'user_id' => 2,
             'poli_id' => 1,
-            'name' => 'Dokter',
-            'address' => 'Jl. Admin',
+            'name' => 'John',
+            'address' => 'Jl. Dokter',
+            'phone_number' => '081234567890',
+        ]);
+
+        Doctor::create([
+            'user_id' => 3,
+            'poli_id' => 2,
+            'name' => 'John',
+            'address' => 'Jl. Dokter',
             'phone_number' => '081234567890',
         ]);
 
         Patient::create([
-            'user_id' => 3,
+            'user_id' => 4,
             'name' => 'Pasien 1',
             'ktp_number' => '1234567890123456',
             'rm_number' => '2101-001',

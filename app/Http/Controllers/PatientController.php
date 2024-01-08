@@ -72,7 +72,6 @@ class PatientController extends Controller
             'complaint' => 'required',
         ]);
 
-        // cek apakah jadwal yang dipilih itu memiliki poli yang sama
         $schedule = ServiceSchedule::with('doctor')->find($request->schedule_id);
         $poli = $schedule->doctor->poli->id;
         $patient = Patient::where('rm_number', $request->rm_number)->first();

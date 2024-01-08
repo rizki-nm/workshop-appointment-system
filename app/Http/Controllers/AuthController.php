@@ -21,7 +21,6 @@ class AuthController extends Controller
 
     public function auth(Request $request)
     {
-        // dd($request->all());
         $validated = $request->validate([
             'email' => 'required',
             'password' => 'required',
@@ -33,10 +32,7 @@ class AuthController extends Controller
                 'title' => 'Login Berhasil',
                 'message' => 'Login Berhasil',
             );
-            $id = Auth::user()->id;
-            $update = User::find($id);
-            $update->updated_at = now();
-            $update->save();
+
             return redirect()->intended('/dashboard')->with($notification);
         }
         $notification = array(
@@ -54,8 +50,8 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
         $notification = array(
             'status' => 'toast_success',
-            'title' => 'Logout berhasil',
-            'message' => 'Terima kasih telah menggunakan aplikasi kami'
+            'title' => 'Logout Berhasil',
+            'message' => 'Logout Berhasil'
         );
         return redirect('/login')->with($notification);
     }

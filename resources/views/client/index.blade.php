@@ -133,7 +133,7 @@
                             '{{ $item->day == 5 ? 'Jumat' : '' }}' +
                             '{{ $item->day == 6 ? 'Sabtu' : '' }}' +
                             '{{ $item->day == 7 ? 'Minggu' : '' }}' +
-                            ' - {{ date('H:i', strtotime($item->end_time)) }} s/d {{ date('H:i', strtotime($item->end_time)) }}';
+                            ' - {{ date('H:i', strtotime($item->start_time)) }} s/d {{ date('H:i', strtotime($item->end_time)) }}';
                         scheduleDropdown.appendChild(option);
                     }
                 @endforeach

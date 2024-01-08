@@ -13,11 +13,6 @@ use Illuminate\Support\Facades\Log;
 
 class DoctorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $doctors = Doctor::all();
@@ -25,12 +20,6 @@ class DoctorController extends Controller
         return view('dashboard.admin.users.doctor.index', compact('doctors', 'polis'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $validation  = $request->validate([
@@ -40,9 +29,6 @@ class DoctorController extends Controller
             'phone_number' => 'required|numeric',
             'address' => 'required',
             'poli_id' => 'required|exists:polis,id',
-            // 'hari' => 'required',
-            // 'jam_mulai' => 'required',
-            // 'jam_selesai' => 'required',
         ]);
 
         try {
@@ -61,15 +47,6 @@ class DoctorController extends Controller
                 'address' => $validation['address'],
                 'poli_id' => $validation['poli_id']
             ]);
-
-            // $doctor = Doctor::where('user_id', $user->id)->first();
-
-            // ServiceSchedule::create([
-            //     'doctor_id' => $doctor->id,
-            //     'day' => $validation['hari'],
-            //     'start_time' => $validation['jam_mulai'],
-            //     'end_time' => $validation['jam_selesai'],
-            // ]);
 
             DB::commit();
             $notification = array(
@@ -91,13 +68,7 @@ class DoctorController extends Controller
             return back()->with($notification);
         }
     }
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
@@ -157,12 +128,6 @@ class DoctorController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $user = User::find($id);

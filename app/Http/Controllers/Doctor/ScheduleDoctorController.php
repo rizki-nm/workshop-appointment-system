@@ -26,7 +26,6 @@ class ScheduleDoctorController extends Controller
             'jam_selesai' => 'required',
         ]);
 
-        // cek apakah jadwal bertabrakan dengan jadwal lain
         $schedule = ServiceSchedule::where('doctor_id', '!=', $user->doctor->id)
             ->where('day', $request->hari)
             ->where('start_time', '<=', $request->jam_mulai)

@@ -67,19 +67,6 @@
                                                 <label for="nama">Pilih Jadwal <span class="text-danger">*</span></label>
                                                 <select name="schedule_id" id="schedule_id" class="form-control">
                                                     <option value="">-- Pilih Jadwal --</option>
-                                                    @foreach ($schedules as $item)
-                                                        <option value="{{ $item->id }}">
-                                                            {{ $item->doctor->name }} - Poli {{ $item->doctor->poli->name }}
-                                                            ({{ $item->day == 1 ? 'Senin' : '' }}
-                                                            {{ $item->day == 2 ? 'Selasa' : '' }}
-                                                            {{ $item->day == 3 ? 'Rabu' : '' }}
-                                                            {{ $item->day == 4 ? 'Kamis' : '' }}
-                                                            {{ $item->day == 5 ? 'Jumat' : '' }}
-                                                            {{ $item->day == 6 ? 'Sabtu' : '' }}
-                                                            {{ $item->day == 7 ? 'Minggu' : '' }}
-                                                            - {{ $item->start_time }} s/d {{ $item->end_time }})
-                                                        </option>
-                                                    @endforeach
                                                 </select>
                                             </div>
                                             <div class="form-group">
@@ -210,6 +197,39 @@
                 "lengthChange": false,
                 "autoWidth": false,
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('poli_id').addEventListener('change', function () {
+                var selectedPoli = this.value;
+
+                var scheduleDropdown = document.getElementById('schedule_id');
+
+                scheduleDropdown.innerHTML = '<option value="">-- Pilih Jadwal --</option>';
+
+                @foreach ($schedules as $item)
+                if ("{{ $item->doctor->poli->id }}" === selectedPoli) {
+                    var option = document.createElement('option');
+                    option.value = "{{ $item->id }}";
+                    const doctorName = "{{ $item->doctor->name }}"
+                    const name = doctorName.split(' ');
+
+                    option.text = `dr. ${name[0]} - ` +
+                        '{{ $item->day == 1 ? 'Senin' : '' }}' +
+                        '{{ $item->day == 2 ? 'Selasa' : '' }}' +
+                        '{{ $item->day == 3 ? 'Rabu' : '' }}' +
+                        '{{ $item->day == 4 ? 'Kamis' : '' }}' +
+                        '{{ $item->day == 5 ? 'Jumat' : '' }}' +
+                        '{{ $item->day == 6 ? 'Sabtu' : '' }}' +
+                        '{{ $item->day == 7 ? 'Minggu' : '' }}' +
+                        ' - {{ date('H:i', strtotime($item->start_time)) }} s/d {{ date('H:i', strtotime($item->end_time)) }}';
+                    scheduleDropdown.appendChild(option);
+                }
+                @endforeach
+
+                    scheduleDropdown.style.display = 'block';
+            });
         });
     </script>
 @endsection
